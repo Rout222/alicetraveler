@@ -8,7 +8,7 @@
 
 using namespace std;
 
-bool achaCaminho (int * matrizCaminho, int * matrizAdj, int n, int origem, int destino, int contador ){
+bool achaCaminho (int * matrizCaminho, int * matrizAdj, int n, int origem, int destino, int contador , int pai){
     if(matrizAdj[origem*n+destino] == 1){
         matrizCaminho[contador] = origem;
         return true;
@@ -16,8 +16,8 @@ bool achaCaminho (int * matrizCaminho, int * matrizAdj, int n, int origem, int d
     cout << contador << endl;
     for (int i = 0; i < n; ++i)
     {
-        if(matrizAdj[origem*n+i] == 1){
-            if(achaCaminho(matrizCaminho,matrizAdj, n, i, destino, contador+1)){
+        if(matrizAdj[origem*n+i] == 1 && i != pai){
+            if(achaCaminho(matrizCaminho,matrizAdj, n, i, destino, contador+1, origem)){
                 matrizCaminho[contador] = origem;
                 return true;
             }
@@ -33,7 +33,7 @@ void Busca(int * matrizAdj, int n, int origem, int destino){
         matrizCaminho[i] = -1;
     }
 
-    achaCaminho(matrizCaminho, matrizAdj, n, origem, destino, 0);
+    achaCaminho(matrizCaminho, matrizAdj, n, origem, destino, 0, -1);
 
     for (int i = 0; i < n; ++i)
     {
